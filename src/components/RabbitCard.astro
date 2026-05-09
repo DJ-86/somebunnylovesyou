@@ -1,0 +1,56 @@
+---
+export interface Props {
+  name: string;
+  breed: string;
+  age: string;
+  gender: string;
+  price: number;
+  status: 'Available' | 'Reserved' | 'Sold';
+  mainPhoto?: string;
+  slug: string;
+}
+
+const { name, breed, age, gender, price, status, mainPhoto, slug } = Astro.props;
+
+const statusClass = {
+  Available: 'status-available',
+  Reserved: 'status-reserved',
+  Sold: 'status-sold',
+}[status];
+
+const statusEmoji = {
+  Available: '✅',
+  Reserved: '🔒',
+  Sold: '❌',
+}[status];
+---
+
+<a href={`/rabbits/${slug}`} class="card block no-underline group transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-bunny-dark/10">
+  <!-- Photo -->
+  <div class="relative bg-tan/40 h-48 overflow-hidden flex items-center justify-center">
+    {mainPhoto ? (
+      <img
+        src={mainPhoto}
+        alt={`${name} the rabbit`}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      />
+    ) : (
+      <span class="text-7xl">🐰</span>
+    )}
+    <span class={`absolute top-3 right-3 ${statusClass}`}>
+      {statusEmoji} {status}
+    </span>
+  </div>
+
+  <!-- Info -->
+  <div class="p-4">
+    <h3 class="font-lora font-semibold text-bunny-dark text-lg mb-0.5">{name}</h3>
+    <p class="text-bunny-light text-xs mb-3">{breed} · {gender} · {age}</p>
+    <div class="flex items-center justify-between">
+      <span class="text-terracotta font-semibold text-lg">£{price}</span>
+      <span class="text-sage-dark text-xs font-medium underline decoration-sage">
+        {status === 'Sold' ? 'Sold — view' : status === 'Reserved' ? 'Join waitlist →' : 'Enquire →'}
+      </span>
+    </div>
+  </div>
+</a>

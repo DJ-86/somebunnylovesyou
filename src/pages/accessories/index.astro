@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const accessories = [
+  { slug: 'starter-hay-pack', name: 'Starter Hay Pack', category: 'Hay & Food', price: 8, emoji: '🌾', desc: 'A generous supply of Timothy hay to get you started — enough for the first two weeks.', inStock: true },
+  { slug: 'food-bundle', name: '4-Week Food Bundle', category: 'Hay & Food', price: 15, emoji: '🥕', desc: 'Pellets, dried herbs, and nuggets — a balanced starter diet for the first month.', inStock: true },
+  { slug: 'soft-brush-comb', name: 'Brush & Comb Set', category: 'Grooming', price: 6, emoji: '🪮', desc: 'Soft bristle brush and fine comb, suitable for all coat lengths. Essential for regular grooming.', inStock: true },
+  { slug: 'carrier-bag', name: 'Rabbit Carrier', category: 'Carriers', price: 18, emoji: '🎒', desc: 'A comfortable, well-ventilated carrier suitable for rabbits up to 4kg. Great for vet visits too.', inStock: true },
+  { slug: 'toy-bundle', name: 'Toy & Enrichment Bundle', category: 'Toys', price: 10, emoji: '🎾', desc: 'Willow balls, cardboard tunnels, and chew toys to keep your rabbit mentally stimulated and happy.', inStock: true },
+  { slug: 'bedding-pack', name: 'Bedding Starter Pack', category: 'Bedding', price: 7, emoji: '🛏️', desc: 'Soft, dust-free paper bedding for the hutch base. Better for respiratory health than wood shavings.', inStock: true },
+  { slug: 'hay-rack', name: 'Hay Rack', category: 'Housing', price: 9, emoji: '🏗️', desc: 'Clip-on hay rack to keep hay off the floor and reduce waste. Fits most standard hutch bars.', inStock: false },
+  { slug: 'water-bottle', name: 'Water Bottle', category: 'Housing', price: 5, emoji: '💧', desc: 'Leak-free 500ml water bottle with metal sipper. Better hygiene than open bowls.', inStock: true },
+];
+
+const categories = ['All', ...new Set(accessories.map(a => a.category))];
+---
+
+<Base title="Accessories" description="Rabbit accessories available at pickup. No checkout needed — just ask when you enquire or collect.">
+
+  <!-- Header -->
+  <section class="bg-gradient-to-b from-[#FDF0E8] to-cream border-b border-tan py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="section-tag">No checkout needed</p>
+      <h1 class="font-lora text-3xl md:text-4xl font-semibold text-bunny-dark mb-3">
+        Accessories & Supplies
+      </h1>
+      <p class="text-bunny-light text-sm max-w-xl leading-relaxed">
+        Everything you need for your new rabbit — available to add to your collection or boarding booking.
+        No online basket or payment needed. Just ask us and we'll sort it.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works banner -->
+  <section class="bg-terracotta/5 border-b border-terracotta/15">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center gap-4 text-sm">
+      <div class="flex items-center gap-2 text-bunny-mid">
+        <span>🛒</span>
+        <span><strong class="text-bunny-dark">At rabbit pickup:</strong> Tell us which items you want and pay together with your rabbit.</span>
+      </div>
+      <div class="flex items-center gap-2 text-bunny-mid">
+        <span>🏠</span>
+        <span><strong class="text-bunny-dark">With boarding:</strong> Add any items to your booking enquiry and we'll have them ready.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter + grid -->
+  <section class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- Category filter -->
+    <div class="flex items-center gap-2 flex-wrap mb-8">
+      {categories.map((cat, i) => (
+        <button
+          data-cat={cat.toLowerCase()}
+          class={`cat-btn text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${i === 0 ? 'bg-terracotta text-white border-terracotta' : 'bg-white text-bunny-mid border-tan hover:bg-cream'}`}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Products grid -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      {accessories.map(item => (
+        <div
+          data-cat={item.category.toLowerCase()}
+          class={`bg-white border border-tan rounded-2xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-md ${!item.inStock ? 'opacity-60' : ''}`}
+        >
+          <div class="bg-cream/60 h-28 flex items-center justify-center text-5xl border-b border-tan">
+            {item.emoji}
+          </div>
+          <div class="p-4">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h3 class="font-medium text-bunny-dark text-sm leading-snug">{item.name}</h3>
+              {!item.inStock && (
+                <span class="text-xs bg-bunny-light/10 text-bunny-light px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">Out of stock</span>
+              )}
+            </div>
+            <p class="text-xs text-bunny-light mb-3 leading-relaxed">{item.desc}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-terracotta font-semibold">£{item.price}</span>
+              <span class="text-xs text-sage-dark font-medium">
+                {item.inStock ? '✓ Available at pickup' : 'Ask us'}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </section>
+
+  <!-- Starter bundle CTA -->
+  <section class="bg-[#F2EBE1] border-t border-tan py-12">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-2">
+        Want a personalised starter bundle?
+      </h2>
+      <p class="text-bunny-light text-sm leading-relaxed mb-6">
+        Tell us about your setup — hutch size, breed, indoor or outdoor — and we'll put together a bundle
+        tailored to your rabbit. Most bundles save you £10–15 versus buying separately.
+      </p>
+      <a href="/enquire?subject=starter-bundle" class="btn-primary">Ask about a starter bundle →</a>
+    </div>
+  </section>
+
+</Base>
+
+<script>
+  const catBtns = document.querySelectorAll('.cat-btn');
+  const products = document.querySelectorAll('#products-grid > div[data-cat]');
+
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-cat') || 'all';
+
+      catBtns.forEach(b => {
+        b.classList.remove('bg-terracotta', 'text-white', 'border-terracotta');
+        b.classList.add('bg-white', 'text-bunny-mid', 'border-tan');
+      });
+      btn.classList.add('bg-terracotta', 'text-white', 'border-terracotta');
+      btn.classList.remove('bg-white', 'text-bunny-mid', 'border-tan');
+
+      products.forEach(p => {
+        const pCat = p.getAttribute('data-cat');
+        (p as HTMLElement).style.display = (cat === 'all' || pCat === cat) ? '' : 'none';
+      });
+    });
+  });
+</script>

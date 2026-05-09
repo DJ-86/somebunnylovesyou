@@ -1,0 +1,85 @@
+---
+const navLinks = [
+  { href: '/rabbits', label: 'Rabbits for Sale' },
+  { href: '/boarding', label: 'Boarding' },
+  { href: '/accessories', label: 'Accessories' },
+  { href: '/care', label: 'Care Guides' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-white border-b border-tan sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 text-bunny-brown font-lora font-semibold text-lg no-underline">
+        <span class="text-2xl">🐰</span>
+        <span>The Bunny Burrow</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class={`text-sm px-4 py-2 rounded-full transition-colors no-underline ${
+              currentPath.startsWith(link.href)
+                ? 'bg-tan text-bunny-dark font-medium'
+                : 'text-bunny-mid hover:bg-cream'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))}
+        <a href="/enquire" class="btn-primary ml-2 text-sm">
+          Enquire Now
+        </a>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 rounded-lg hover:bg-cream text-bunny-mid"
+        aria-label="Toggle menu"
+      >
+        <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-tan bg-white px-4 py-4">
+    {navLinks.map(link => (
+      <a
+        href={link.href}
+        class="block py-3 text-sm text-bunny-mid border-b border-cream last:border-0 hover:text-bunny-dark no-underline"
+      >
+        {link.label}
+      </a>
+    ))}
+    <a href="/enquire" class="btn-primary block text-center mt-4">
+      Enquire Now
+    </a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+</script>

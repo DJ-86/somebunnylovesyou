@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+import EnquiryForm from '../../components/EnquiryForm.astro';
+
+// Once CMS is set up, replace with:
+// export async function getStaticPaths() {
+//   const rabbits = await getCollection('rabbits');
+//   return rabbits.map(r => ({ params: { slug: r.slug }, props: { rabbit: r } }));
+// }
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'clover' }, props: {
+      rabbit: {
+        name: 'Clover', breed: 'Mini Lop', age: '10 weeks', gender: 'Female',
+        temperament: 'Incredibly gentle and curious. Loves being handled and will happily sit on your lap. Great with children.',
+        price: 75, status: 'Available',
+        description: 'Clover is a beautiful cream Mini Lop with the softest fur you\'ve ever felt. She was born in our home and has been handled daily since birth. She\'s used to the sounds of a family home and is completely unfazed by noise. She comes with a full health check and we\'ll give you a personalised care guide when you collect her.',
+        photos: [],
+      }
+    }},
+    { params: { slug: 'bramble' }, props: {
+      rabbit: {
+        name: 'Bramble', breed: 'Dutch', age: '12 weeks', gender: 'Male',
+        temperament: 'Confident and inquisitive. Loves exploring and is happiest when he can hop freely.',
+        price: 65, status: 'Reserved',
+        description: 'Bramble is a classic black-and-white Dutch rabbit with heaps of personality. He\'s been the boldest of his litter from day one.',
+        photos: [],
+      }
+    }},
+    { params: { slug: 'hazel' }, props: {
+      rabbit: {
+        name: 'Hazel', breed: 'Lionhead', age: '9 weeks', gender: 'Female',
+        temperament: 'Calm and affectionate. Enjoys being groomed and is very patient.',
+        price: 85, status: 'Available',
+        description: 'Hazel is a stunning Lionhead with a magnificent mane. She\'s calm, clean, and absolutely beautiful. Her grooming needs are higher than other breeds but she genuinely enjoys the attention.',
+        photos: [],
+      }
+    }},
+    { params: { slug: 'pepper' }, props: {
+      rabbit: {
+        name: 'Pepper', breed: 'Rex', age: '14 weeks', gender: 'Male',
+        temperament: 'Playful and energetic. Needs lots of space and enrichment.',
+        price: 70, status: 'Sold',
+        description: 'Pepper has found his forever home! Keep an eye on the listings for similar Rex rabbits coming soon.',
+        photos: [],
+      }
+    }},
+  ];
+}
+
+const { rabbit } = Astro.props;
+
+const statusClass = {
+  'Available': 'status-available',
+  'Reserved': 'status-reserved',
+  'Sold': 'status-sold',
+}[rabbit.status] || 'status-available';
+
+const suggestedAccessories = [
+  { name: 'Starter hay pack', price: 8, emoji: '🌾' },
+  { name: 'Soft brush & comb', price: 6, emoji: '🪮' },
+  { name: 'Carrier bag', price: 18, emoji: '🎒' },
+  { name: 'Food bundle (4 weeks)', price: 15, emoji: '🥕' },
+  { name: 'Toy bundle', price: 10, emoji: '🎾' },
+];
+---
+
+<Base title={rabbit.name} description={`${rabbit.name} — ${rabbit.breed} rabbit for sale. ${rabbit.temperament}`}>
+
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- Back link -->
+    <a href="/rabbits" class="inline-flex items-center gap-1 text-sm text-bunny-light hover:text-bunny-dark no-underline mb-8 transition-colors">
+      ← Back to all rabbits
+    </a>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+      <!-- Photos -->
+      <div>
+        <div class="bg-tan/30 rounded-2xl aspect-square flex items-center justify-center text-9xl border border-tan">
+          {rabbit.photos && rabbit.photos.length > 0 ? (
+            <img src={rabbit.photos[0]} alt={rabbit.name} class="w-full h-full object-cover rounded-2xl" />
+          ) : '🐰'}
+        </div>
+        {rabbit.photos && rabbit.photos.length > 1 && (
+          <div class="grid grid-cols-4 gap-2 mt-3">
+            {rabbit.photos.slice(1, 5).map((photo: string) => (
+              <div class="aspect-square bg-tan/30 rounded-xl overflow-hidden border border-tan">
+                <img src={photo} alt={rabbit.name} class="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Details -->
+      <div>
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <h1 class="font-lora text-3xl font-semibold text-bunny-dark">{rabbit.name}</h1>
+          <span class={statusClass}>{rabbit.status}</span>
+        </div>
+
+        <p class="text-terracotta text-2xl font-semibold mb-5">£{rabbit.price}</p>
+
+        <!-- Specs grid -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          {[
+            { label: 'Breed', value: rabbit.breed },
+            { label: 'Age', value: rabbit.age },
+            { label: 'Gender', value: rabbit.gender },
+          ].map(item => (
+            <div class="bg-cream rounded-xl p-3 border border-tan">
+              <p class="text-xs text-bunny-light uppercase tracking-wide mb-0.5">{item.label}</p>
+              <p class="text-sm font-medium text-bunny-dark">{item.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Temperament -->
+        <div class="mb-5">
+          <p class="text-xs font-medium text-bunny-light uppercase tracking-wide mb-1.5">Temperament</p>
+          <p class="text-sm text-bunny-mid leading-relaxed italic border-l-2 border-tan pl-3">"{rabbit.temperament}"</p>
+        </div>
+
+        <!-- Description -->
+        <p class="text-sm text-bunny-mid leading-relaxed mb-6">{rabbit.description}</p>
+
+        {rabbit.status !== 'Sold' && (
+          <div class="bg-cream border border-tan rounded-2xl p-5">
+            <h2 class="font-lora font-semibold text-bunny-dark text-base mb-4">
+              {rabbit.status === 'Available' ? `Enquire about ${rabbit.name}` : `Join the waitlist for ${rabbit.name}`}
+            </h2>
+            <EnquiryForm
+              subject={`Rabbit enquiry: ${rabbit.name} (${rabbit.breed})`}
+              rabbitName={rabbit.name}
+            />
+          </div>
+        )}
+
+        {rabbit.status === 'Sold' && (
+          <div class="bg-cream border border-tan rounded-2xl p-5 text-center">
+            <p class="text-bunny-light text-sm mb-3">This rabbit has found their forever home 💛</p>
+            <a href="/rabbits" class="btn-primary">See available rabbits →</a>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Suggested accessories -->
+    <div class="mt-14 pt-10 border-t border-tan">
+      <div class="mb-6">
+        <p class="section-tag">Complete the setup</p>
+        <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-1">
+          Suggested starter items for {rabbit.name}
+        </h2>
+        <p class="text-bunny-light text-sm">
+          Available at collection — no checkout needed. Just ask us to add them when you enquire.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {suggestedAccessories.map(item => (
+          <div class="bg-white border border-tan rounded-2xl p-4 text-center hover:shadow-md transition-shadow">
+            <div class="text-3xl mb-2">{item.emoji}</div>
+            <p class="text-sm font-medium text-bunny-dark mb-1">{item.name}</p>
+            <p class="text-terracotta font-semibold">£{item.price}</p>
+            <p class="text-xs text-bunny-light mt-1">Available at pickup</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-4 p-4 bg-terracotta/5 border border-terracotta/20 rounded-xl text-sm text-bunny-mid">
+        💡 <strong class="text-bunny-dark">Starter bundle tip:</strong> Ask us about a full starter bundle when you enquire —
+        we can put together a personalised kit for your rabbit and home setup, typically saving you £10–15 vs buying separately.
+      </div>
+    </div>
+
+  </div>
+
+</Base>

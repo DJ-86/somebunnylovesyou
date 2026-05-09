@@ -1,0 +1,66 @@
+backend:
+  name: github
+  repo: YOUR_USERNAME/bunny-burrow
+  branch: main
+  base_url: https://YOUR_DOMAIN.com
+  auth_endpoint: api/auth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "rabbits"
+    label: "🐇 Rabbits for Sale"
+    folder: "src/content/rabbits"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Rabbit Name", name: "title", widget: "string" }
+      - { label: "Breed", name: "breed", widget: "string", required: true }
+      - { label: "Age", name: "age", widget: "string", required: true, hint: "e.g. 10 weeks" }
+      - { label: "Gender", name: "gender", widget: "select", required: true, options: ["Female", "Male"] }
+      - { label: "Temperament", name: "temperament", widget: "text", required: true }
+      - { label: "Price (£)", name: "price", widget: "number", required: true }
+      - { label: "Status", name: "status", widget: "select", required: true, options: ["Available", "Reserved", "Sold"] }
+      - { label: "Main Photo", name: "mainPhoto", widget: "image", required: false }
+      - { label: "Extra Photos", name: "photos", widget: "list", required: false, field: { label: "Photo", name: "photo", widget: "image" } }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
+
+  - name: "boarding"
+    label: "🏠 Boarding Settings"
+    files:
+      - label: "Pricing & Info"
+        name: "pricing"
+        file: "src/content/boarding/pricing.md"
+        fields:
+          - { label: "Single rabbit (£/day)", name: "priceSingle", widget: "number" }
+          - { label: "Bonded pair (£/day)", name: "pricePair", widget: "number" }
+          - { label: "Nail clipping (£)", name: "priceNails", widget: "number" }
+          - { label: "Grooming (£)", name: "priceGrooming", widget: "number" }
+          - { label: "Daily photo (£/day)", name: "pricePhoto", widget: "number" }
+          - { label: "Daily video (£/day)", name: "priceVideo", widget: "number" }
+
+  - name: "accessories"
+    label: "🛒 Accessories"
+    folder: "src/content/accessories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Product Name", name: "title", widget: "string", required: true }
+      - { label: "Category", name: "category", widget: "select", required: true, options: ["Hay & Food", "Housing", "Grooming", "Toys", "Carriers", "Bedding"] }
+      - { label: "Price (£)", name: "price", widget: "number", required: true }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - { label: "Description", name: "body", widget: "markdown", required: true }
+      - { label: "In stock", name: "inStock", widget: "boolean", default: true }
+
+  - name: "care"
+    label: "📖 Care Guides"
+    folder: "src/content/care"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Category", name: "category", widget: "select", required: true, options: ["Feeding", "Housing", "Bonding", "First-time owners", "Health", "Grooming"] }
+      - { label: "Summary", name: "summary", widget: "text", required: true }
+      - { label: "Article body", name: "body", widget: "markdown", required: true }
+      - { label: "Published date", name: "date", widget: "datetime" }

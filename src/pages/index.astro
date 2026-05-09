@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+import RabbitCard from '../components/RabbitCard.astro';
+
+// Sample rabbit data — replace with Astro content collections once CMS is set up
+const featuredRabbits = [
+  {
+    slug: 'clover',
+    name: 'Clover',
+    breed: 'Mini Lop',
+    age: '10 weeks',
+    gender: 'Female',
+    price: 75,
+    status: 'Available' as const,
+    mainPhoto: '',
+  },
+  {
+    slug: 'bramble',
+    name: 'Bramble',
+    breed: 'Dutch',
+    age: '12 weeks',
+    gender: 'Male',
+    price: 65,
+    status: 'Reserved' as const,
+    mainPhoto: '',
+  },
+  {
+    slug: 'hazel',
+    name: 'Hazel',
+    breed: 'Lionhead',
+    age: '9 weeks',
+    gender: 'Female',
+    price: 85,
+    status: 'Available' as const,
+    mainPhoto: '',
+  },
+];
+---
+
+<Base title="Home" description="Family-run rabbit sales, boarding, accessories and care guides. UK based.">
+
+  <!-- HERO -->
+  <section class="relative bg-gradient-to-br from-[#4A3728] via-[#6B4E3D] to-[#8B6252] overflow-hidden">
+    <!-- Dot texture -->
+    <div class="absolute inset-0 opacity-10"
+      style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 28px 28px;">
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
+      <div class="inline-block bg-white/10 border border-white/20 text-[#F0D9C0] text-xs font-medium tracking-widest uppercase px-4 py-2 rounded-full mb-6">
+        🏡 Family-run · UK based
+      </div>
+
+      <h1 class="font-lora text-4xl md:text-5xl font-semibold text-white leading-tight mb-5">
+        Find your perfect<br>
+        <em class="text-terracotta-light not-italic">fluffy companion</em>
+      </h1>
+
+      <p class="text-white/70 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        Lovingly bred rabbits, expert boarding, and everything you need to
+        give your bunny the best life possible.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/rabbits" class="btn-primary text-base px-8 py-3.5">
+          🐇 See rabbits for sale
+        </a>
+        <a href="/boarding" class="btn-outline text-base px-8 py-3.5 text-white border-white/30 hover:bg-white/10 hover:border-white/50">
+          Book boarding →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK NAV -->
+  <section class="border-b border-tan bg-white">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4">
+      {[
+        { href: '/rabbits', icon: '🐇', label: 'Rabbits for Sale', desc: 'Find your bunny' },
+        { href: '/boarding', icon: '🏠', label: 'Rabbit Boarding', desc: 'We\'ll look after them' },
+        { href: '/accessories', icon: '🛒', label: 'Accessories', desc: 'Everything you need' },
+        { href: '/care', icon: '📖', label: 'Care Guides', desc: 'Expert rabbit advice' },
+      ].map((item, i) => (
+        <a
+          href={item.href}
+          class={`flex flex-col items-center text-center px-4 py-6 hover:bg-cream transition-colors no-underline group ${i < 3 ? 'border-r border-tan' : ''}`}
+        >
+          <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">{item.icon}</span>
+          <span class="font-medium text-bunny-dark text-sm">{item.label}</span>
+          <span class="text-bunny-light text-xs mt-0.5">{item.desc}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- FEATURED RABBITS -->
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <p class="section-tag">Currently available</p>
+        <h2 class="section-title mb-1">Meet the bunnies</h2>
+        <p class="section-sub max-w-lg mb-0">
+          Hand-raised, health-checked, and ready for their forever home.
+          Prices include a free care consultation.
+        </p>
+      </div>
+      <a href="/rabbits" class="btn-outline hidden sm:block whitespace-nowrap">
+        See all →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featuredRabbits.map(rabbit => (
+        <RabbitCard {...rabbit} />
+      ))}
+    </div>
+
+    <div class="mt-6 text-center sm:hidden">
+      <a href="/rabbits" class="btn-outline">See all rabbits →</a>
+    </div>
+  </section>
+
+  <!-- BOARDING PREVIEW -->
+  <section class="bg-[#F2EBE1] border-y border-tan py-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <div>
+          <p class="section-tag" style="color: #8B6252">Rabbit boarding</p>
+          <h2 class="section-title">Going away?<br>We'll look after them.</h2>
+          <p class="text-bunny-light leading-relaxed text-sm mb-6">
+            Not a kennel — a proper 5-star bunny holiday. Fresh hay daily, clean housing,
+            welfare checks, and optional photo updates so you never have to worry.
+          </p>
+          <a href="/boarding" class="btn-primary">Check availability →</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Pricing card -->
+          <div class="bg-white border border-tan rounded-2xl p-5">
+            <h3 class="font-lora font-semibold text-bunny-dark text-base mb-4">🏡 Pricing</h3>
+            {[
+              { label: 'Single rabbit', value: '£8/day' },
+              { label: 'Bonded pair', value: '£12/day' },
+              { label: 'Hay & feeding', value: 'Included ✓' },
+              { label: 'Daily checks', value: 'Included ✓' },
+            ].map(row => (
+              <div class="flex justify-between items-center py-2 border-b border-cream last:border-0 text-sm">
+                <span class="text-bunny-mid">{row.label}</span>
+                <span class="text-terracotta font-medium">{row.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- Add-ons card -->
+          <div class="bg-white border border-tan rounded-2xl p-5">
+            <h3 class="font-lora font-semibold text-bunny-dark text-base mb-4">✨ Add-ons</h3>
+            {[
+              { label: 'Daily photos', value: '£2/day' },
+              { label: 'Daily videos', value: '£3/day' },
+              { label: 'Nail clipping', value: '£5' },
+              { label: 'Grooming', value: '£8' },
+            ].map(row => (
+              <div class="flex justify-between items-center py-2 border-b border-cream last:border-0 text-sm">
+                <span class="text-bunny-mid">{row.label}</span>
+                <span class="text-terracotta font-medium">{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <div class="text-center mb-10">
+      <p class="section-tag">Why choose us</p>
+      <h2 class="section-title">Rabbit welfare first, always</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        {
+          icon: '🌿',
+          title: 'Ethically raised',
+          desc: 'All our rabbits are raised with enrichment, socialisation, and proper nutrition from day one. Never overcrowded, always loved.',
+        },
+        {
+          icon: '❤️',
+          title: 'Lifetime support',
+          desc: 'Buy a rabbit from us and you get free advice for life. We\'re always at the end of the phone if you have questions.',
+        },
+        {
+          icon: '📸',
+          title: 'Boarding updates',
+          desc: 'Optional daily photos and short videos straight to your phone so you can see your rabbit is happy while you\'re away.',
+        },
+        {
+          icon: '🩺',
+          title: 'Health checked',
+          desc: 'Every rabbit is vet-checked before going to their new home. We\'ll tell you honestly if any health notes apply.',
+        },
+        {
+          icon: '🤝',
+          title: 'No-pressure enquiries',
+          desc: 'Just a friendly chat to find the right match. We\'d rather you wait for the right rabbit than rush into the wrong one.',
+        },
+        {
+          icon: '📦',
+          title: 'Starter bundles',
+          desc: 'Pick up everything you need at collection — hay, food, carrier, toys. We\'ll suggest a starter kit to suit your setup.',
+        },
+      ].map(item => (
+        <div class="bg-white border border-tan rounded-2xl p-6 text-center hover:shadow-md transition-shadow">
+          <div class="text-4xl mb-4">{item.icon}</div>
+          <h3 class="font-lora font-semibold text-bunny-dark text-base mb-2">{item.title}</h3>
+          <p class="text-bunny-light text-sm leading-relaxed">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CARE GUIDES TEASER -->
+  <section class="bg-sage-dark py-14">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="font-lora text-2xl md:text-3xl font-semibold text-white mb-3">
+        New to rabbit ownership?
+      </h2>
+      <p class="text-white/70 text-sm leading-relaxed mb-7 max-w-xl mx-auto">
+        Our free care guides cover everything — feeding, housing, bonding rabbits together,
+        and what to expect in the first weeks.
+      </p>
+      <a href="/care" class="inline-block bg-white text-sage-dark font-medium px-8 py-3 rounded-full text-sm hover:bg-cream transition-colors">
+        Read the care guides →
+      </a>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="max-w-3xl mx-auto px-6 py-16 text-center">
+    <h2 class="section-title text-3xl mb-3">Ready to find your new best friend?</h2>
+    <p class="text-bunny-light leading-relaxed mb-8 max-w-xl mx-auto">
+      Get in touch — no pressure, just a friendly chat about finding the right rabbit for your family and home.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/rabbits" class="btn-primary text-base px-8">
+        🐇 See all available rabbits
+      </a>
+      <a href="/enquire" class="btn-outline text-base px-8">
+        📬 Send an enquiry
+      </a>
+    </div>
+  </section>
+
+</Base>

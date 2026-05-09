@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import RabbitCard from '../../components/RabbitCard.astro';
+
+// Replace this with Astro content collections once CMS is set up
+// import { getCollection } from 'astro:content';
+// const allRabbits = await getCollection('rabbits');
+
+const allRabbits = [
+  { slug: 'clover',  name: 'Clover',  breed: 'Mini Lop',  age: '10 weeks', gender: 'Female', price: 75,  status: 'Available' as const, mainPhoto: '' },
+  { slug: 'bramble', name: 'Bramble', breed: 'Dutch',     age: '12 weeks', gender: 'Male',   price: 65,  status: 'Reserved' as const,  mainPhoto: '' },
+  { slug: 'hazel',   name: 'Hazel',   breed: 'Lionhead',  age: '9 weeks',  gender: 'Female', price: 85,  status: 'Available' as const, mainPhoto: '' },
+  { slug: 'pepper',  name: 'Pepper',  breed: 'Rex',       age: '14 weeks', gender: 'Male',   price: 70,  status: 'Sold' as const,      mainPhoto: '' },
+];
+---
+
+<Base title="Rabbits for Sale" description="Browse our available rabbits. Hand-raised, health-checked, and ready for their forever home.">
+
+  <!-- Header -->
+  <section class="bg-gradient-to-b from-[#F5EBE0] to-cream border-b border-tan py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="section-tag">Find your bunny</p>
+      <h1 class="font-lora text-3xl md:text-4xl font-semibold text-bunny-dark mb-3">
+        Rabbits for Sale
+      </h1>
+      <p class="text-bunny-light text-sm max-w-xl leading-relaxed">
+        All our rabbits are hand-raised with love, health-checked, and come with a free care consultation.
+        Payments in person at collection — no online checkout.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter bar -->
+  <section class="bg-white border-b border-tan sticky top-16 z-40">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2 flex-wrap">
+      <span class="text-xs text-bunny-light mr-1">Filter:</span>
+      {['All', 'Available', 'Reserved', 'Sold'].map(f => (
+        <button
+          data-filter={f.toLowerCase()}
+          class={`filter-btn text-xs px-3 py-1.5 rounded-full border transition-colors cursor-pointer ${f === 'All' ? 'bg-terracotta text-white border-terracotta' : 'bg-white text-bunny-mid border-tan hover:bg-cream'}`}
+        >
+          {f}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="max-w-6xl mx-auto px-6 py-10">
+    <div id="rabbits-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {allRabbits.map(rabbit => (
+        <div data-status={rabbit.status.toLowerCase()}>
+          <RabbitCard {...rabbit} />
+        </div>
+      ))}
+    </div>
+
+    <p id="no-results" class="hidden text-center text-bunny-light py-12">
+      No rabbits found with that filter.
+    </p>
+  </section>
+
+  <!-- Can't find what you want -->
+  <section class="bg-[#F2EBE1] border-t border-tan py-12">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-2">
+        Can't find what you're looking for?
+      </h2>
+      <p class="text-bunny-light text-sm leading-relaxed mb-6">
+        We have new litters regularly. Get in touch and tell us what breed, age, or temperament you're after — we'll
+        let you know as soon as something suitable comes up.
+      </p>
+      <a href="/enquire" class="btn-primary">Send an enquiry →</a>
+    </div>
+  </section>
+
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#rabbits-grid > div[data-status]');
+  const noResults = document.getElementById('no-results');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter') || 'all';
+
+      buttons.forEach(b => {
+        b.classList.remove('bg-terracotta', 'text-white', 'border-terracotta');
+        b.classList.add('bg-white', 'text-bunny-mid', 'border-tan');
+      });
+      btn.classList.add('bg-terracotta', 'text-white', 'border-terracotta');
+      btn.classList.remove('bg-white', 'text-bunny-mid', 'border-tan');
+
+      let visible = 0;
+      cards.forEach(card => {
+        const status = card.getAttribute('data-status');
+        const show = filter === 'all' || status === filter;
+        (card as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      noResults?.classList.toggle('hidden', visible > 0);
+    });
+  });
+</script>

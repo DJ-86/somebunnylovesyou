@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import BoardingForm from '../../components/BoardingForm.astro';
+---
+
+<Base title="Rabbit Boarding" description="5-star rabbit boarding. Daily care, fresh hay, welfare checks and optional photo updates. UK based.">
+
+  <!-- Header -->
+  <section class="bg-gradient-to-b from-[#E8F0E7] to-cream border-b border-tan py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="section-tag" style="color: #5C7A5B">Rabbit boarding</p>
+      <h1 class="font-lora text-3xl md:text-4xl font-semibold text-bunny-dark mb-3">
+        A proper holiday,<br>not a kennel.
+      </h1>
+      <p class="text-bunny-light text-sm max-w-xl leading-relaxed">
+        We treat every rabbit in our care as if they were our own. Fresh hay, clean housing, daily welfare checks,
+        and optional updates so you can relax knowing they're happy.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+      <!-- Info column -->
+      <div class="lg:col-span-2 space-y-8">
+
+        <!-- Pricing -->
+        <div>
+          <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-5">Boarding prices</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                title: 'Single rabbit',
+                price: '£8/day',
+                note: 'All breeds welcome',
+                emoji: '🐰',
+              },
+              {
+                title: 'Bonded pair',
+                price: '£12/day',
+                note: 'Housed together, as they like',
+                emoji: '🐰🐰',
+              },
+            ].map(item => (
+              <div class="bg-white border-2 border-tan rounded-2xl p-6 text-center">
+                <div class="text-3xl mb-3">{item.emoji}</div>
+                <h3 class="font-lora font-semibold text-bunny-dark text-lg mb-1">{item.title}</h3>
+                <p class="text-terracotta text-2xl font-semibold mb-2">{item.price}</p>
+                <p class="text-bunny-light text-xs">{item.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- What's included -->
+        <div>
+          <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-4">What's included</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { icon: '🌾', title: 'Unlimited fresh hay', desc: 'Timothy and meadow hay, replenished daily' },
+              { icon: '🥕', title: 'Feeding & fresh water', desc: 'Pellets and fresh veg twice daily' },
+              { icon: '🏠', title: 'Clean housing', desc: 'Spacious hutch, cleaned daily' },
+              { icon: '🩺', title: 'Daily welfare checks', desc: 'Behaviour, eating habits, and health monitored' },
+              { icon: '🌿', title: 'Exercise time', desc: 'Daily free-roam exercise periods' },
+              { icon: '💬', title: 'Updates on request', desc: 'Free to text us anytime for a check-in' },
+            ].map(item => (
+              <div class="flex gap-3 p-4 bg-white border border-tan rounded-xl">
+                <span class="text-2xl flex-shrink-0">{item.icon}</span>
+                <div>
+                  <p class="font-medium text-bunny-dark text-sm">{item.title}</p>
+                  <p class="text-bunny-light text-xs leading-relaxed mt-0.5">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Add-ons -->
+        <div id="addons">
+          <h2 class="font-lora text-xl font-semibold text-bunny-dark mb-2">Optional add-ons</h2>
+          <p class="text-bunny-light text-sm mb-5">Little extras to make their stay even better — and keep you in the loop.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                emoji: '📸',
+                title: 'Daily photo update',
+                price: '£2/day',
+                desc: 'One photo per day sent straight to your phone via WhatsApp or text.',
+              },
+              {
+                emoji: '🎥',
+                title: 'Daily video update',
+                price: '£3/day',
+                desc: 'A short clip each day so you can see them running, eating, and being themselves.',
+              },
+              {
+                emoji: '✂️',
+                title: 'Nail clipping',
+                price: '£5 per rabbit',
+                desc: 'Trimmed safely while they\'re in our care. Great opportunity if you\'re squeamish about doing it yourself.',
+              },
+              {
+                emoji: '🪮',
+                title: 'Grooming session',
+                price: '£8 per rabbit',
+                desc: 'A full brush and groom, especially useful for long-haired breeds like Angoras or Lionheads.',
+              },
+            ].map(item => (
+              <div class="bg-white border border-tan rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">{item.emoji}</span>
+                  <div>
+                    <p class="font-medium text-bunny-dark text-sm">{item.title}</p>
+                    <p class="text-terracotta text-sm font-semibold">{item.price}</p>
+                  </div>
+                </div>
+                <p class="text-bunny-light text-xs leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Policy notes -->
+        <div class="bg-[#F2EBE1] rounded-2xl p-6 text-sm text-bunny-mid space-y-2">
+          <h3 class="font-semibold text-bunny-dark mb-3">Good to know</h3>
+          <p>💳 Payment is at drop-off — cash, card machine, or bank transfer.</p>
+          <p>📋 Please bring any medication, favourite toys, or comfort items.</p>
+          <p>🐰 We accept all breeds. If your rabbit has special needs, just let us know in the form.</p>
+          <p>📅 We recommend booking at least 2 weeks ahead in school holidays.</p>
+        </div>
+
+      </div>
+
+      <!-- Booking form -->
+      <div class="lg:col-span-1">
+        <div class="bg-white border border-tan rounded-2xl p-6 sticky top-24">
+          <h2 class="font-lora text-lg font-semibold text-bunny-dark mb-1">Check availability</h2>
+          <p class="text-bunny-light text-xs mb-5">We'll confirm within 24 hours.</p>
+          <BoardingForm />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</Base>
