@@ -42,22 +42,13 @@ const suggestedAccessories = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
       <!-- Photos -->
-      <div>
-        <div class="bg-tan/30 rounded-2xl aspect-square flex items-center justify-center text-9xl border border-tan">
-          {rabbit.photos && rabbit.photos.length > 0 ? (
-            <img src={rabbit.photos[0]} alt={rabbit.name} class="w-full h-full object-cover rounded-2xl" />
-          ) : '🐰'}
-        </div>
-        {rabbit.photos && rabbit.photos.length > 1 && (
-          <div class="grid grid-cols-4 gap-2 mt-3">
-            {rabbit.photos.slice(1, 5).map((photo: string) => (
-              <div class="aspect-square bg-tan/30 rounded-xl overflow-hidden border border-tan">
-                <img src={photo} alt={rabbit.name} class="w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
-        )}
+    <div>
+      <div class="bg-tan/30 rounded-2xl aspect-square flex items-center justify-center text-9xl border border-tan">
+        {rabbit.mainPhoto ? (
+      <img src={rabbit.mainPhoto} alt={rabbit.name} class="w-full h-full object-cover rounded-2xl" />
+      ) : '🐰'}
       </div>
+    </div>
 
       <!-- Details -->
       <div>
