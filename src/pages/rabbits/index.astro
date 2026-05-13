@@ -2,17 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import RabbitCard from '../../components/RabbitCard.astro';
 
-// Replace this with Astro content collections once CMS is set up
-// import { getCollection } from 'astro:content';
-// const allRabbits = await getCollection('rabbits');
 
-const allRabbits = [
-  { slug: 'clover',  name: 'Clover',  breed: 'Mini Lop',  age: '10 weeks', gender: 'Female', price: 75,  status: 'Available' as const, mainPhoto: '' },
-  { slug: 'bramble', name: 'Bramble', breed: 'Dutch',     age: '12 weeks', gender: 'Male',   price: 65,  status: 'Reserved' as const,  mainPhoto: '' },
-  { slug: 'hazel',   name: 'Hazel',   breed: 'Lionhead',  age: '9 weeks',  gender: 'Female', price: 85,  status: 'Available' as const, mainPhoto: '' },
-  { slug: 'pepper',  name: 'Pepper',  breed: 'Rex',       age: '14 weeks', gender: 'Male',   price: 70,  status: 'Sold' as const,      mainPhoto: '' },
-];
----
+import { getCollection } from 'astro:content';
+const allRabbits = await getCollection('rabbits');
+
 
 <Base title="Rabbits for Sale" description="Browse our available rabbits. Hand-raised, health-checked, and ready for their forever home.">
 
