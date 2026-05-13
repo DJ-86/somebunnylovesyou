@@ -14,11 +14,10 @@ const currentPath = Astro.url.pathname;
     <div class="flex items-center justify-between h-16">
 
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 text-bunny-brown font-lora font-semibold text-lg no-underline">
-        <span class="text-2xl">🐰</span>
-        <span>The Bunny Burrow</span>
-      </a>
-
+    <a href="/" class="flex items-center gap-2 no-underline hover:opacity-80 transition-opacity">
+      <img src="/logo.png" alt="somebunnylovesyou" class="w-10 h-10 rounded-full" />
+      <span class="font-lora text-lg font-semibold text-bunny-brown">somebunnylovesyou</span>
+    </a>
       <!-- Desktop nav -->
       <nav class="hidden md:flex items-center gap-1">
         {navLinks.map(link => (
