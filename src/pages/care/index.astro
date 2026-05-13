@@ -1,9 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
-
 import { getCollection } from 'astro:content';
-const guides = await getCollection('care');
 
+const guides = await getCollection('care');
 const categories = ['All', ...new Set(guides.map(g => g.data.category))];
 const categoryColors: Record<string, string> = {
   Feeding: 'bg-orange-100 text-orange-700',
@@ -16,77 +15,46 @@ const categoryColors: Record<string, string> = {
 ---
 
 <Base title="Rabbit Care Guides" description="Free rabbit care guides — feeding, housing, bonding, health and first-time owner advice.">
-
-  <!-- Header -->
   <section class="bg-gradient-to-b from-[#EAF0E8] to-cream border-b border-tan py-14">
     <div class="max-w-6xl mx-auto px-6">
       <p class="section-tag" style="color:#5C7A5B">Free advice</p>
-      <h1 class="font-lora text-3xl md:text-4xl font-semibold text-bunny-dark mb-3">
-        Rabbit Care Guides
-      </h1>
-      <p class="text-bunny-light text-sm max-w-xl leading-relaxed">
-        Honest, practical guides written from years of rabbit experience. Whether you're a first-time owner
-        or just need a refresher, we've got you covered.
-      </p>
+      <h1 class="font-lora text-3xl md:text-4xl font-semibold text-bunny-dark mb-3">Rabbit Care Guides</h1>
+      <p class="text-bunny-light text-sm max-w-xl leading-relaxed">Honest, practical guides written from years of rabbit experience. Whether you're a first-time owner or just need a refresher, we've got you covered.</p>
     </div>
   </section>
 
   <section class="max-w-6xl mx-auto px-6 py-10">
-
-    <!-- Filter -->
     <div class="flex flex-wrap gap-2 mb-8">
       {categories.map((cat, i) => (
-        <button
-          data-cat={cat.toLowerCase()}
-          class={`guide-btn text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${i === 0 ? 'bg-sage-dark text-white border-sage-dark' : 'bg-white text-bunny-mid border-tan hover:bg-cream'}`}
-        >
+        <button data-cat={cat.toLowerCase()} class={`guide-btn text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${i === 0 ? 'bg-sage-dark text-white border-sage-dark' : 'bg-white text-bunny-mid border-tan hover:bg-cream'}`}>
           {cat}
         </button>
       ))}
     </div>
 
-<!-- Guide cards -->
-<div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {guides.map(guide => (
-    
-      href={`/care/${guide.slug}`}
-      data-cat={guide.data.category.toLowerCase()}
-      class="bg-white border border-tan rounded-2xl overflow-hidden no-underline group hover:-translate-y-1 hover:shadow-md transition-all block"
-    >
-      <div class="bg-sage/10 h-28 flex items-center justify-center text-5xl border-b border-tan">
-        📖
-      </div>
-      <div class="p-5">
-        <div class="flex items-center justify-between mb-2">
-          <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.data.category] || 'bg-gray-100 text-gray-700'}`}>
-            {guide.data.category}
-          </span>
-        </div>
-        <h2 class="font-lora font-semibold text-bunny-dark text-base leading-snug mb-2 group-hover:text-terracotta transition-colors">
-          {guide.data.title}
-        </h2>
-        <p class="text-bunny-light text-xs leading-relaxed">{guide.data.summary}</p>
-      </div>
-    </a>
-  ))}
-</div>
-
-  </section>
-
-  <!-- Still have questions -->
-  <section class="bg-sage-dark py-12">
-    <div class="max-w-2xl mx-auto px-6 text-center">
-      <h2 class="font-lora text-xl font-semibold text-white mb-2">Still have questions?</h2>
-      <p class="text-white/70 text-sm mb-6 leading-relaxed">
-        Can't find what you're looking for? Just ask — we're happy to give advice even if you didn't
-        buy your rabbit from us.
-      </p>
-      <a href="/enquire" class="inline-block bg-white text-sage-dark font-medium px-8 py-3 rounded-full text-sm hover:bg-cream transition-colors">
-        Ask us a question →
-      </a>
+    <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {guides.map(guide => (
+        <a href={`/care/${guide.slug}`} data-cat={guide.data.category.toLowerCase()} class="bg-white border border-tan rounded-2xl overflow-hidden no-underline group hover:-translate-y-1 hover:shadow-md transition-all block">
+          <div class="bg-sage/10 h-28 flex items-center justify-center text-5xl border-b border-tan">📖</div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.data.category] || 'bg-gray-100 text-gray-700'}`}>{guide.data.category}</span>
+            </div>
+            <h2 class="font-lora font-semibold text-bunny-dark text-base leading-snug mb-2 group-hover:text-terracotta transition-colors">{guide.data.title}</h2>
+            <p class="text-bunny-light text-xs leading-relaxed">{guide.data.summary}</p>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 
+  <section class="bg-sage-dark py-12">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <h2 class="font-lora text-xl font-semibold text-white mb-2">Still have questions?</h2>
+      <p class="text-white/70 text-sm mb-6 leading-relaxed">Can't find what you're looking for? Just ask — we're happy to give advice even if you didn't buy your rabbit from us.</p>
+      <a href="/enquire" class="inline-block bg-white text-sage-dark font-medium px-8 py-3 rounded-full text-sm hover:bg-cream transition-colors">Ask us a question →</a>
+    </div>
+  </section>
 </Base>
 
 <script>
@@ -96,14 +64,12 @@ const categoryColors: Record<string, string> = {
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
       const cat = btn.getAttribute('data-cat') || 'all';
-
       btns.forEach(b => {
         b.classList.remove('bg-sage-dark', 'text-white', 'border-sage-dark');
         b.classList.add('bg-white', 'text-bunny-mid', 'border-tan');
       });
       btn.classList.add('bg-sage-dark', 'text-white', 'border-sage-dark');
       btn.classList.remove('bg-white', 'text-bunny-mid', 'border-tan');
-
       cards.forEach(c => {
         const cCat = c.getAttribute('data-cat');
         (c as HTMLElement).style.display = (cat === 'all' || cCat === cat) ? '' : 'none';
