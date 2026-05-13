@@ -12,6 +12,16 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
+
+const categoryColors: Record<string, string> = {
+  Feeding: 'bg-orange-100 text-orange-700',
+  Housing: 'bg-blue-100 text-blue-700',
+  Bonding: 'bg-pink-100 text-pink-700',
+  'First-time owners': 'bg-green-100 text-green-700',
+  Health: 'bg-red-100 text-red-700',
+  Grooming: 'bg-purple-100 text-purple-700',
+};
+
 ---
 
 <Base title={article.title} description={article.title}>
