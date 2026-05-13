@@ -8,4 +8,4 @@ price: 123
 status: Available
 mainPhoto: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/1920px-Oryctolagus_cuniculus_Rcdo.jpg
 ---
-Amazxing little bunny
+Amazing little bunny
