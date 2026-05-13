@@ -42,10 +42,19 @@ const allRabbits = await getCollection('rabbits');
   <section class="max-w-6xl mx-auto px-6 py-10">
     <div id="rabbits-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {allRabbits.map(rabbit => (
-        <div data-status={rabbit.status.toLowerCase()}>
-          <RabbitCard {...rabbit} />
-        </div>
-      ))}
+  <div data-status={rabbit.data.status.toLowerCase()}>
+    <RabbitCard 
+      slug={rabbit.slug}
+      name={rabbit.data.title}
+      breed={rabbit.data.breed}
+      age={rabbit.data.age}
+      gender={rabbit.data.gender}
+      price={rabbit.data.price}
+      status={rabbit.data.status}
+      mainPhoto={rabbit.data.mainPhoto}
+    />
+  </div>
+))}
     </div>
 
     <p id="no-results" class="hidden text-center text-bunny-light py-12">

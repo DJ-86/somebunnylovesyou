@@ -2,52 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import EnquiryForm from '../../components/EnquiryForm.astro';
 
-// Once CMS is set up, replace with:
-// export async function getStaticPaths() {
-//   const rabbits = await getCollection('rabbits');
-//   return rabbits.map(r => ({ params: { slug: r.slug }, props: { rabbit: r } }));
-// }
+import { getCollection } from 'astro:content';
 
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'clover' }, props: {
-      rabbit: {
-        name: 'Clover', breed: 'Mini Lop', age: '10 weeks', gender: 'Female',
-        temperament: 'Incredibly gentle and curious. Loves being handled and will happily sit on your lap. Great with children.',
-        price: 75, status: 'Available',
-        description: 'Clover is a beautiful cream Mini Lop with the softest fur you\'ve ever felt. She was born in our home and has been handled daily since birth. She\'s used to the sounds of a family home and is completely unfazed by noise. She comes with a full health check and we\'ll give you a personalised care guide when you collect her.',
-        photos: [],
-      }
-    }},
-    { params: { slug: 'bramble' }, props: {
-      rabbit: {
-        name: 'Bramble', breed: 'Dutch', age: '12 weeks', gender: 'Male',
-        temperament: 'Confident and inquisitive. Loves exploring and is happiest when he can hop freely.',
-        price: 65, status: 'Reserved',
-        description: 'Bramble is a classic black-and-white Dutch rabbit with heaps of personality. He\'s been the boldest of his litter from day one.',
-        photos: [],
-      }
-    }},
-    { params: { slug: 'hazel' }, props: {
-      rabbit: {
-        name: 'Hazel', breed: 'Lionhead', age: '9 weeks', gender: 'Female',
-        temperament: 'Calm and affectionate. Enjoys being groomed and is very patient.',
-        price: 85, status: 'Available',
-        description: 'Hazel is a stunning Lionhead with a magnificent mane. She\'s calm, clean, and absolutely beautiful. Her grooming needs are higher than other breeds but she genuinely enjoys the attention.',
-        photos: [],
-      }
-    }},
-    { params: { slug: 'pepper' }, props: {
-      rabbit: {
-        name: 'Pepper', breed: 'Rex', age: '14 weeks', gender: 'Male',
-        temperament: 'Playful and energetic. Needs lots of space and enrichment.',
-        price: 70, status: 'Sold',
-        description: 'Pepper has found his forever home! Keep an eye on the listings for similar Rex rabbits coming soon.',
-        photos: [],
-      }
-    }},
-  ];
+export async function getStaticPaths() {
+  const rabbits = await getCollection('rabbits');
+  return rabbits.map(rabbit => ({
+    params: { slug: rabbit.slug },
+    props: { rabbit: rabbit.data },
+  }));
 }
+
 
 const { rabbit } = Astro.props;
 

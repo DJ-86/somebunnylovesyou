@@ -1,58 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const guides = [
-  {
-    slug: 'feeding-guide',
-    title: 'The Complete Rabbit Feeding Guide',
-    category: 'Feeding',
-    summary: 'What to feed your rabbit, how often, and what to avoid. Covers hay, pellets, fresh veg, and treats.',
-    readTime: '5 min read',
-    emoji: '🥕',
-  },
-  {
-    slug: 'housing-guide',
-    title: 'Housing Your Rabbit: Indoor vs Outdoor',
-    category: 'Housing',
-    summary: 'Everything you need to know about hutch sizes, bedding, temperature, and keeping your rabbit safe.',
-    readTime: '6 min read',
-    emoji: '🏠',
-  },
-  {
-    slug: 'bonding-rabbits',
-    title: 'Bonding Two Rabbits Together',
-    category: 'Bonding',
-    summary: 'Rabbits are social animals but introductions need care. Our step-by-step bonding process explained.',
-    readTime: '7 min read',
-    emoji: '💛',
-  },
-  {
-    slug: 'first-time-owners',
-    title: 'First-Time Rabbit Owner Guide',
-    category: 'First-time owners',
-    summary: 'What to expect in the first week, how to handle your rabbit, and common beginner mistakes to avoid.',
-    readTime: '8 min read',
-    emoji: '🐣',
-  },
-  {
-    slug: 'rabbit-health-basics',
-    title: 'Rabbit Health: Signs to Watch For',
-    category: 'Health',
-    summary: 'How to spot when something isn\'t right, common illnesses, and when to call your vet.',
-    readTime: '5 min read',
-    emoji: '🩺',
-  },
-  {
-    slug: 'grooming-guide',
-    title: 'Grooming Your Rabbit',
-    category: 'Grooming',
-    summary: 'Brushing, nail clipping, and ear checks — how often and how to do it without stress.',
-    readTime: '4 min read',
-    emoji: '🪮',
-  },
-];
+import { getCollection } from 'astro:content';
+const guides = await getCollection('care');
 
-const categories = ['All', ...new Set(guides.map(g => g.category))];
+const categories = ['All', ...new Set(guides.map(g => g.data.category))];
 const categoryColors: Record<string, string> = {
   Feeding: 'bg-orange-100 text-orange-700',
   Housing: 'bg-blue-100 text-blue-700',
@@ -96,25 +48,24 @@ const categoryColors: Record<string, string> = {
     <!-- Guide cards -->
     <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {guides.map(guide => (
-        <a
+        
           href={`/care/${guide.slug}`}
-          data-cat={guide.category.toLowerCase()}
+          data-cat={guide.data.category.toLowerCase()}
           class="bg-white border border-tan rounded-2xl overflow-hidden no-underline group hover:-translate-y-1 hover:shadow-md transition-all block"
         >
           <div class="bg-sage/10 h-28 flex items-center justify-center text-5xl border-b border-tan">
-            {guide.emoji}
+            📖
           </div>
           <div class="p-5">
             <div class="flex items-center justify-between mb-2">
-              <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.category] || 'bg-gray-100 text-gray-700'}`}>
-                {guide.category}
+              <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.data.category] || 'bg-gray-100 text-gray-700'}`}>
+                {guide.data.category}
               </span>
-              <span class="text-xs text-bunny-light">{guide.readTime}</span>
             </div>
             <h2 class="font-lora font-semibold text-bunny-dark text-base leading-snug mb-2 group-hover:text-terracotta transition-colors">
-              {guide.title}
+              {guide.data.title}
             </h2>
-            <p class="text-bunny-light text-xs leading-relaxed">{guide.summary}</p>
+            <p class="text-bunny-light text-xs leading-relaxed">{guide.data.summary}</p>
           </div>
         </a>
       ))}
