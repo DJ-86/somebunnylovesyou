@@ -45,31 +45,31 @@ const categoryColors: Record<string, string> = {
       ))}
     </div>
 
-    <!-- Guide cards -->
-    <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {guides.map(guide => (
-        
-          href={`/care/${guide.slug}`}
-          data-cat={guide.data.category.toLowerCase()}
-          class="bg-white border border-tan rounded-2xl overflow-hidden no-underline group hover:-translate-y-1 hover:shadow-md transition-all block"
-        >
-          <div class="bg-sage/10 h-28 flex items-center justify-center text-5xl border-b border-tan">
-            📖
-          </div>
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.data.category] || 'bg-gray-100 text-gray-700'}`}>
-                {guide.data.category}
-              </span>
-            </div>
-            <h2 class="font-lora font-semibold text-bunny-dark text-base leading-snug mb-2 group-hover:text-terracotta transition-colors">
-              {guide.data.title}
-            </h2>
-            <p class="text-bunny-light text-xs leading-relaxed">{guide.data.summary}</p>
-          </div>
-        </a>
-      ))}
-    </div>
+<!-- Guide cards -->
+<div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {guides.map(guide => (
+    
+      href={`/care/${guide.slug}`}
+      data-cat={guide.data.category.toLowerCase()}
+      class="bg-white border border-tan rounded-2xl overflow-hidden no-underline group hover:-translate-y-1 hover:shadow-md transition-all block"
+    >
+      <div class="bg-sage/10 h-28 flex items-center justify-center text-5xl border-b border-tan">
+        📖
+      </div>
+      <div class="p-5">
+        <div class="flex items-center justify-between mb-2">
+          <span class={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[guide.data.category] || 'bg-gray-100 text-gray-700'}`}>
+            {guide.data.category}
+          </span>
+        </div>
+        <h2 class="font-lora font-semibold text-bunny-dark text-base leading-snug mb-2 group-hover:text-terracotta transition-colors">
+          {guide.data.title}
+        </h2>
+        <p class="text-bunny-light text-xs leading-relaxed">{guide.data.summary}</p>
+      </div>
+    </a>
+  ))}
+</div>
 
   </section>
 
