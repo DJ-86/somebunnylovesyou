@@ -48,7 +48,7 @@ const categoryColors: Record<string, string> = {
     </div>
 
     <!-- Content -->
-      <div class="prose prose-bunny max-w-none" set:html={article.body}></div>
+     <div class="prose prose-bunny max-w-none" set:html={article.body.replace(/^## (.+)$/gm, '<h2>$1</h2>').replace(/^### (.+)$/gm, '<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/^- (.+)$/gm, '<li>$1</li>').replace(/(<li>[\s\S]*?<\/li>)/gm, (m) => `<ul class="my-3 space-y-1">${m}</ul>`)}></div>
 
     <!-- CTA at end of article -->
       <div class="mt-12 pt-8 border-t border-tan bg-cream rounded-2xl p-6">
