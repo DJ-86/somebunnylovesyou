@@ -1,0 +1,56 @@
+#article-prose {
+  color: #5A4636;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+#article-prose h2 {
+  font-family: 'Lora', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2C1F15;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+#article-prose h3 {
+  font-family: 'Lora', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2C1F15;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#article-prose p {
+  color: #5A4636;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+#article-prose strong {
+  color: #2C1F15;
+  font-weight: 600;
+}
+
+#article-prose a {
+  color: #B86B45;
+  text-decoration: underline;
+}
+
+#article-prose a:hover {
+  color: #8F4E2E;
+}
+
+#article-prose ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+#article-prose li {
+  color: #5A4636;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}

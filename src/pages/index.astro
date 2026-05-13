@@ -42,7 +42,7 @@ const featuredRabbits = allRabbits.slice(0, 3);
     </div>
   </section>
 
-  <!-- QUICK NAV -->
+<!-- QUICK NAV -->
   <section class="border-b border-tan bg-white">
     <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4">
       {[
@@ -51,8 +51,8 @@ const featuredRabbits = allRabbits.slice(0, 3);
         { href: '/accessories', icon: '🛒', label: 'Accessories', desc: 'Everything you need' },
         { href: '/care', icon: '📖', label: 'Care Guides', desc: 'Expert rabbit advice' },
       ].map((item, i) => (
-        
-          href={item.href}
+        <a
+        href={item.href}
           class={`flex flex-col items-center text-center px-4 py-6 hover:bg-cream transition-colors no-underline group ${i < 3 ? 'border-r border-tan' : ''}`}
         >
           <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">{item.icon}</span>
