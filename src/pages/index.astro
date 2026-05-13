@@ -1,40 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import RabbitCard from '../components/RabbitCard.astro';
+import { getCollection } from 'astro:content';
 
-// Sample rabbit data — replace with Astro content collections once CMS is set up
-const featuredRabbits = [
-  {
-    slug: 'clover',
-    name: 'Clover',
-    breed: 'Mini Lop',
-    age: '10 weeks',
-    gender: 'Female',
-    price: 75,
-    status: 'Available' as const,
-    mainPhoto: '',
-  },
-  {
-    slug: 'bramble',
-    name: 'Bramble',
-    breed: 'Dutch',
-    age: '12 weeks',
-    gender: 'Male',
-    price: 65,
-    status: 'Reserved' as const,
-    mainPhoto: '',
-  },
-  {
-    slug: 'hazel',
-    name: 'Hazel',
-    breed: 'Lionhead',
-    age: '9 weeks',
-    gender: 'Female',
-    price: 85,
-    status: 'Available' as const,
-    mainPhoto: '',
-  },
-];
+const allRabbits = await getCollection('rabbits');
+const featuredRabbits = allRabbits.slice(0, 3);
 ---
 
 <Base title="Home" description="Family-run rabbit sales, boarding, accessories and care guides. UK based.">
@@ -81,7 +51,7 @@ const featuredRabbits = [
         { href: '/accessories', icon: '🛒', label: 'Accessories', desc: 'Everything you need' },
         { href: '/care', icon: '📖', label: 'Care Guides', desc: 'Expert rabbit advice' },
       ].map((item, i) => (
-        <a
+        
           href={item.href}
           class={`flex flex-col items-center text-center px-4 py-6 hover:bg-cream transition-colors no-underline group ${i < 3 ? 'border-r border-tan' : ''}`}
         >
@@ -111,7 +81,18 @@ const featuredRabbits = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {featuredRabbits.map(rabbit => (
-        <RabbitCard {...rabbit} />
+        <div data-status={rabbit.data.status.toLowerCase()}>
+          <RabbitCard 
+            slug={rabbit.slug}
+            name={rabbit.data.title}
+            breed={rabbit.data.breed}
+            age={rabbit.data.age}
+            gender={rabbit.data.gender}
+            price={rabbit.data.price}
+            status={rabbit.data.status}
+            mainPhoto={rabbit.data.mainPhoto}
+          />
+        </div>
       ))}
     </div>
 
