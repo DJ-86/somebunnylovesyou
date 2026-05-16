@@ -1,6 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BoardingForm from '../../components/BoardingForm.astro';
+import { getCollection } from 'astro:content';
+
+const boardingData = await getCollection('boarding');
+const pricing = boardingData[0]?.data || {
+  priceSingle: 8,
+  pricePair: 12,
+  pricePhoto: 2,
+  priceVideo: 3,
+  priceNails: 5,
+  priceGrooming: 8,
+};
 ---
 
 <Base title="Rabbit Boarding" description="5-star rabbit boarding. Daily care, fresh hay, welfare checks and optional photo updates. Based in the West Midlands.">
@@ -32,13 +43,13 @@ import BoardingForm from '../../components/BoardingForm.astro';
             {[
               {
                 title: 'Single rabbit',
-                price: '£8/day',
+                price: `£${pricing.priceSingle}/day`,
                 note: 'All breeds welcome',
                 emoji: '🐰',
               },
               {
                 title: 'Bonded pair',
-                price: '£12/day',
+                price: `£${pricing.pricePair}/day`,
                 note: 'Housed together, as they like',
                 emoji: '🐰🐰',
               },
@@ -85,25 +96,25 @@ import BoardingForm from '../../components/BoardingForm.astro';
               {
                 emoji: '📸',
                 title: 'Daily photo update',
-                price: '£2/day',
+                price: `£${pricing.pricePhoto}/day`,
                 desc: 'One photo per day sent straight to your phone via WhatsApp or text.',
               },
               {
                 emoji: '🎥',
                 title: 'Daily video update',
-                price: '£3/day',
+                price: `£${pricing.priceVideo}/day`,
                 desc: 'A short clip each day so you can see them running, eating, and being themselves.',
               },
               {
                 emoji: '✂️',
                 title: 'Nail clipping',
-                price: '£5 per rabbit',
+                price: `£${pricing.priceNails} per rabbit`,
                 desc: 'Trimmed safely while they\'re in our care. Great opportunity if you\'re squeamish about doing it yourself.',
               },
               {
                 emoji: '🪮',
                 title: 'Grooming session',
-                price: '£8 per rabbit',
+                price: `£${pricing.priceGrooming} per rabbit`,
                 desc: 'A full brush and groom, especially useful for long-haired breeds like Angoras or Lionheads.',
               },
             ].map(item => (
