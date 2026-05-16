@@ -1,11 +1,11 @@
 ---
-title: Fluffly
-breed: Lop
-age: 12 weeks
-gender: Female
+title: Coming soon
+breed: Mini lop
+age: 6 weeks
+gender: Male
 temperament: Hopping mad
 price: 50
 status: Available
-mainPhoto: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/1920px-Oryctolagus_cuniculus_Rcdo.jpg
+mainPhoto: /images/uploads/20260516_100145.jpg
 ---
 Amazing little bunny
