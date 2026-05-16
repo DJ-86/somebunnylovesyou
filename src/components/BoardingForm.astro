@@ -1,4 +1,168 @@
 ---
+import { getCollection } from 'astro:content';
+
+const boardingData = await getCollection('boarding');
+const pricing = boardingData[0]?.data || {
+  priceSingle: 8,
+  pricePair: 12,
+  pricePhoto: 2,
+  priceVideo: 3,
+  priceNails: 5,
+  priceGrooming: 8,
+};
+
+const web3FormsKey = import.meta.env.WEB3FORMS_KEY || 'b44aa622-28a5-4b1f-9c4f-64956ee0aaee';
+---
+
+<form
+  id="boarding-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="space-y-5"
+>
+  <input type="hidden" name="access_key" value={web3FormsKey}/>
+  <input type="hidden" name="subject" value="New boarding enquiry from website" />
+  <input type="hidden" name="redirect" value="false" />
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div>
+      <label for="b-name" class="form-label">Your name *</label>
+      <input type="text" id="b-name" name="name" required class="form-input" placeholder="Jane Smith" />
+    </div>
+    <div>
+      <label for="b-phone" class="form-label">Phone number *</label>
+      <input type="tel" id="b-phone" name="phone" required class="form-input" placeholder="07700 900000" />
+    </div>
+  </div>
+
+  <div>
+    <label for="b-email" class="form-label">Email address *</label>
+    <input type="email" id="b-email" name="email" required class="form-input" placeholder="jane@example.com" />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div>
+      <label for="b-arrival" class="form-label">Drop-off date *</label>
+      <input type="date" id="b-arrival" name="arrival_date" required class="form-input" />
+    </div>
+    <div>
+      <label for="b-departure" class="form-label">Pick-up date *</label>
+      <input type="date" id="b-departure" name="departure_date" required class="form-input" />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div>
+      <label for="b-count" class="form-label">Number of rabbits *</label>
+      <select id="b-count" name="number_of_rabbits" required class="form-input">
+        <option value="">Select…</option>
+        <option value="1">1 rabbit</option>
+        <option value="2 (bonded pair)">2 — bonded pair</option>
+        <option value="2 (separate)">2 — need separate hutches</option>
+        <option value="3+">3 or more</option>
+      </select>
+    </div>
+    <div>
+      <label for="b-rabbit-names" class="form-label">Rabbit name(s) *</label>
+      <input type="text" id="b-rabbit-names" name="rabbit_names" required class="form-input" placeholder="e.g. Clover & Bramble" />
+    </div>
+  </div>
+
+  <div>
+    <label for="b-medical" class="form-label">Medical needs / special diet</label>
+    <textarea
+      id="b-medical"
+      name="medical_needs"
+      rows="2"
+      class="form-input resize-none"
+      placeholder="Any medication, dietary requirements, or health conditions we should know about…"
+    ></textarea>
+  </div>
+
+  <!-- Add-ons -->
+  <div>
+    <p class="form-label">Add-ons (optional)</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <label class="flex items-start gap-3 p-3 border border-tan rounded-xl cursor-pointer hover:bg-cream transition-colors">
+        <input type="checkbox" name="addon_photos" value={`Daily photo updates (£${pricing.pricePhoto}/day)`} class="mt-0.5 accent-terracotta" />
+        <span class="text-sm">
+          <span class="font-medium text-bunny-dark block">Daily photos</span>
+          <span class="text-bunny-light text-xs">£{pricing.pricePhoto}/day — sent to your phone</span>
+        </span>
+      </label>
+      <label class="flex items-start gap-3 p-3 border border-tan rounded-xl cursor-pointer hover:bg-cream transition-colors">
+        <input type="checkbox" name="addon_videos" value={`Daily short video updates (£${pricing.priceVideo}/day)`} class="mt-0.5 accent-terracotta" />
+        <span class="text-sm">
+          <span class="font-medium text-bunny-dark block">Daily videos</span>
+          <span class="text-bunny-light text-xs">£{pricing.priceVideo}/day — short clips</span>
+        </span>
+      </label>
+      <label class="flex items-start gap-3 p-3 border border-tan rounded-xl cursor-pointer hover:bg-cream transition-colors">
+        <input type="checkbox" name="addon_nails" value={`Nail clipping (£${pricing.priceNails})`} class="mt-0.5 accent-terracotta" />
+        <span class="text-sm">
+          <span class="font-medium text-bunny-dark block">Nail clipping</span>
+          <span class="text-bunny-light text-xs">£{pricing.priceNails} per rabbit</span>
+        </span>
+      </label>
+      <label class="flex items-start gap-3 p-3 border border-tan rounded-xl cursor-pointer hover:bg-cream transition-colors">
+        <input type="checkbox" name="addon_grooming" value={`Grooming session (£${pricing.priceGrooming})`} class="mt-0.5 accent-terracotta" />
+        <span class="text-sm">
+          <span class="font-medium text-bunny-dark block">Grooming</span>
+          <span class="text-bunny-light text-xs">£{pricing.priceGrooming} per rabbit</span>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div id="boarding-result" class="hidden"></div>
+
+  <button type="submit" class="btn-primary w-full text-center">
+    Send Boarding Enquiry →
+  </button>
+
+  <p class="text-xs text-bunny-light text-center">
+    We'll confirm availability within 24 hours. Payment at drop-off.
+  </p>
+</form>
+
+<script>
+  const form = document.getElementById('boarding-form') as HTMLFormElement;
+  const result = document.getElementById('boarding-result');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    const data = new FormData(form);
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data,
+    });
+    const json = await response.json();
+
+    if (json.success) {
+      form.reset();
+      btn.textContent = '✅ Enquiry sent!';
+      if (result) {
+        result.className = 'bg-green-50 border border-green-200 text-green-800 rounded-xl px-4 py-3 text-sm';
+        result.textContent = "We've received your boarding request and will confirm availability within 24 hours.";
+      }
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Send Boarding Enquiry →';
+      if (result) {
+        result.className = 'bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm';
+        result.textContent = 'Something went wrong. Please try again.';
+      }
+    }
+    result?.classList.remove('hidden');
+  });
+</script>
+
+---
 // Get Web3Forms key from environment variable (set in Netlify)
 const web3FormsKey = import.meta.env.WEB3FORMS_KEY || 'YOUR_ACCESS_KEY';
 ---
